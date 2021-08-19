@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    env_file: .env
+    volumes:
+      - ./db-data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+
+
+  drupal:
+    build: .
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - ./drupal-data/modules:/var/www/html/modules
+      - ./drupal-data/themes:/var/www/html/themes
+      - ./drupal-data/files:/opt/drupal/web/sites/default/files
+    env_file: .env
+    ports:
+      - "${EXPOSED_PORT}:80"
+
+  pma:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "8800:80"
+    env_file: .env

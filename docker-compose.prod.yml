@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  drupal:
+    build: .
+    restart: always
+    volumes:
+      - ./drupal-data/modules:/var/www/html/modules
+      - ./drupal-data/themes:/var/www/html/themes
+      - ./drupal-data/files:/opt/drupal/web/sites/default/files
+    env_file: .env
+    ports:
+      - "${EXPOSED_PORT}:80"
