@@ -1,0 +1,1 @@
+docker run -p 8004:8000 -d --env-file ./.env -v ${PWD}:/code  --restart=always --name tierrasinkas_web tierrasinkas_image
