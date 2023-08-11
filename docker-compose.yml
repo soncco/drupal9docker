@@ -3,11 +3,9 @@ version: "3"
 services:
   db:
     image: mysql:5.7
-    restart: always
     env_file: .env
     volumes:
       - ./db-data:/var/lib/mysql
-    restart: always
     ports:
       - "3306:3306"
 
@@ -16,10 +14,9 @@ services:
     build: .
     depends_on:
       - db
-    restart: always
     volumes:
-      - ./drupal-data/modules:/var/www/html/modules
-      - ./drupal-data/themes:/var/www/html/themes
+      - ./drupal-data/modules:/var/www/html/sites/all/modules
+      - ./drupal-data/themes:/var/www/html/sites/all/themes
       - ./drupal-data/files:/opt/drupal/web/sites/default/files
     env_file: .env
     ports:
@@ -27,7 +24,6 @@ services:
 
   pma:
     image: phpmyadmin:latest
-    restart: always
     ports:
       - "8800:80"
     env_file: .env
